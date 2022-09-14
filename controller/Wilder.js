@@ -31,19 +31,23 @@ class WilderController {
   }
 
   async updateWilder(first_name, last_name, age, id) {
-    let wilder = this.db
-      .createQueryBuilder()
-      .update()
-      .set({ first_name, last_name, age })
-      // .where(`id=${id}`) // id=10
-      .where("id= :id", { id }) // id=10
-      .execute();
-
-      return wilder;
+    return (
+      this.db
+        .createQueryBuilder()
+        .update()
+        .set({ first_name, last_name, age })
+        // .where(`id=${id}`) // id=10
+        .where("id= :id", { id }) // id=10
+        .execute()
+    );
   }
 
-  //suppression
-
-  //edition
+  async deleteWilder(id) {
+    return this.db
+      .createQueryBuilder()
+      .delete()
+      .where("id= :id", { id })
+      .execute();
+  }
 }
 export default WilderController;

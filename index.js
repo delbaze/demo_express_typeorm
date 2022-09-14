@@ -44,6 +44,22 @@ app.patch("/wilders/update/:id", async function (req, res) {
   res.json({ wilder });
 });
 
+app.delete("/wilders/delete", async function (req, res) {
+  const { id } = req.body;
+  let objet = {};
+  try {
+    let result = await new WilderController().deleteWilder(id);
+
+    if (result.affected === 0) {
+      objet = { success: false, message: "Le wilder n'existe pas" };
+    } else {
+      objet = { success: true, message: "Wilder supprimé" };
+    }
+    return res.json(objet);
+  } catch (err) {
+    return res.json({ success: false, message: err.message });
+  }
+});
 const start = async () => {
   await dataSource.initialize();
   app.listen(process.env.PORT, () => {
