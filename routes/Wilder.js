@@ -56,4 +56,15 @@ router.delete("/delete", async function (req, res) {
   }
 });
 
+router.post("/assignNoteLanguage", async function (req, res) {
+  const { wilderId, languageId, note } = req.body;
+
+  let result = await new WilderController().assignNoteLanguage(
+    languageId,
+    wilderId,
+    note
+  );
+  console.log("🟩🟩🟩🟩🟩 ~ file: Wilder.js ~ line 67 ~ result", result)
+});
+
 export default router;

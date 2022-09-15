@@ -1,18 +1,16 @@
 import { EntitySchema } from "typeorm";
 export default new EntitySchema({
-  name: "Wilder",
-  tableName: "wilders",
+  name: "Language",
+  tableName: "languages",
   columns: {
     id: {
       primary: true,
       type: "int",
       generated: true,
-      
     },
-    first_name: {
+    label: {
       type: "varchar",
+      unique: true // le label ne pourra jamais être injecté 2 fois en base
     },
-    last_name: { type: "varchar" },
-    age: { type: "int" },
   },
 });

@@ -49,5 +49,7 @@ class WilderController {
       .where("id= :id", { id })
       .execute();
   }
+
+
 }
 export default WilderController;

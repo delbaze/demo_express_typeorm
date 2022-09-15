@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import dataSource from "./lib/datasource";
-import { wilders } from "./routes";
+import { wilders, languages } from "./routes";
 
 dotenv.config();
 
@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/wilders", wilders);
+app.use("/languages", languages);
+
 const start = async () => {
   await dataSource.initialize();
   app.listen(process.env.PORT, () => {
