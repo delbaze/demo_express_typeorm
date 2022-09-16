@@ -21,6 +21,8 @@ export default new EntitySchema({
       target: "Wilder",
       type: "many-to-one",
       eager: true,
+      joinColumn: true,
+      inverseSide: "notes", //ce côté inverse se retrouve dans l'entité wilder (relations.notes)
     },
   },
 });

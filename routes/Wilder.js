@@ -10,7 +10,11 @@ router.get("/", async function (req, res) {
 router.get("/:id", async function (req, res) {
   const { id } = req.params;
   let wilder = await new WilderController().findWilder(id);
-  res.json({ wilder });
+  if (wilder) {
+    res.json({ wilder, success: true });
+  } else {
+    res.json({ success: false });
+  }
 });
 
 router.post("/create", async function (req, res) {
@@ -63,7 +67,7 @@ router.post("/assignNoteLanguage", async function (req, res) {
     wilderId,
     note
   );
-  res.json({result})
+  res.json({ result });
 });
 
 export default router;
