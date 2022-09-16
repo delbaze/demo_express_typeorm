@@ -1,4 +1,3 @@
-import Wilder from "../entity/Wilder";
 import dataSource from "../lib/datasource";
 class WilderController {
   constructor() {
@@ -11,6 +10,13 @@ class WilderController {
   //récupérer 1 wilder en particulier (à partir de son ID)
 
   async findWilder(id) {
+    // let noteRepository = dataSource.getRepository("Note");
+    // return await this.db
+    //   .createQueryBuilder()
+    //   .leftJoin("note.wilderId", "id")
+    //   // .leftJoin('categories.user', 'user')
+    //   .where("wilderId= :id", { id })
+    //   .getOne();
     return await this.db.findOneBy({ id });
   }
 
@@ -50,6 +56,39 @@ class WilderController {
       .execute();
   }
 
+  async assignNoteLanguage(languageId, wilderId, note) {
+    let languageRepository = dataSource.getRepository("Language");
+    let noteRepository = dataSource.getRepository("Note");
+    let language = await languageRepository.findOneBy({ id: languageId });
+    if (!language) {
+      throw new Error("ce langage n'existe pas");
+    }
+    let wilder = await this.db.findOneBy({ id: wilderId });
+    if (!wilder) {
+      throw new Error("ce wilder n'existe pas");
+    }
+    let previousNote = await noteRepository.findOneBy({ wilder, language });
+    console.log(
+      "🟩🟩🟩🟩🟩 ~ file: Wilder.js ~ line 64 ~ WilderController ~ assignNoteLanguage ~ previousNote",
+      previousNote
+    );
+    // if (previousNote) {
+    //   throw new Error("une note existe déjà");
+    // }
+    let newNote = noteRepository.save({
+      ...previousNote,
+      language: languageId,
+      wilder: wilderId,
+      note,
+    });
+    // let newNote = noteRepository
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .values([{ language: languageId, wilder: wilderId, note }])
+    //   .execute();
 
+    return newNote;
+    // return {};
+  }
 }
 export default WilderController;
