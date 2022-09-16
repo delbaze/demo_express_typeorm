@@ -10,7 +10,11 @@ router.get("/", async function (req, res) {
 router.get("/:id", async function (req, res) {
   const { id } = req.params;
   let wilder = await new WilderController().findWilder(id);
-  res.json({ wilder });
+  if (wilder) {
+    res.json({ wilder, success: true });
+  } else {
+    res.json({ success: false });
+  }
 });
 
 router.post("/create", async function (req, res) {
@@ -21,9 +25,9 @@ router.post("/create", async function (req, res) {
       last_name,
       age
     );
-    res.json({ success: true, wilder });
+    res.json({ success: true, wilder, message: "Le wilder a été ajouté" });
   } catch (err) {
-    res.json({ success: false });
+    res.json({ success: false, message: err.message });
   }
 });
 
@@ -41,7 +45,6 @@ router.patch("/update/:id", async function (req, res) {
 
 router.delete("/delete", async function (req, res) {
   const { id } = req.body;
-  let result = {};
   try {
     let result = await new WilderController().deleteWilder(id);
 
@@ -64,7 +67,7 @@ router.post("/assignNoteLanguage", async function (req, res) {
     wilderId,
     note
   );
-  console.log("🟩🟩🟩🟩🟩 ~ file: Wilder.js ~ line 67 ~ result", result)
+  res.json({ result });
 });
 
 export default router;

@@ -7,12 +7,18 @@ export default new EntitySchema({
       primary: true,
       type: "int",
       generated: true,
-      
     },
     first_name: {
       type: "varchar",
     },
     last_name: { type: "varchar" },
     age: { type: "int" },
+  },
+  relations: {//relation inverse permettant ensuite d'obtenir les notes du wilder
+    notes: {
+      type: "one-to-many",
+      target: "Note",
+      inverseSide: "wilder",
+    },
   },
 });
