@@ -23,6 +23,7 @@ export default new EntitySchema({
       eager: true,
       joinColumn: true,
       inverseSide: "notes", //ce côté inverse se retrouve dans l'entité wilder (relations.notes)
+      onDelete: "CASCADE",
     },
   },
 });
