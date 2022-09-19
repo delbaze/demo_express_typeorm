@@ -16,6 +16,7 @@ export default new EntitySchema({
       target: "Language",
       type: "many-to-one",
       eager: true,
+      onDelete: "CASCADE",
     },
     wilder: {
       target: "Wilder",
